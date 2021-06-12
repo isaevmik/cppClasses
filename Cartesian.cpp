@@ -90,6 +90,30 @@ void Split(node* cartesianT,
     expandOrNarrow(cartesianT);
 }
 
+void reverse(node*& cartesianT,
+             int l,
+             int r) {
+    node* t1, *t2, *t3, *t4;
+    Split(cartesianT, t1, t2, r);
+    Split(t1, t3, t4, l - 1);
+    t4->isReversed ^= true;
+    cartesianT = Merge(t4, t2);
+    cartesianT = Merge(t3, cartesianT);
+}
+
+int Min(node*& cartesianT,
+        int l,
+        int r) {
+    push(cartesianT);
+    node* t1, *t2, *t3, *t4;
+    Split(cartesianT, t1, t2, r);
+    Split(t1, t3, t4, l - 1);
+    const int t = get_min_value(t4);
+    cartesianT = Merge(t4, t2);
+    cartesianT = Merge(t3, cartesianT);
+    return t;
+}
+
 node* insert(const vector<long long int>& inputData) {
     node* res = nullptr;
     for (const auto x : inputData) {
